@@ -34,13 +34,14 @@ class Instance:
 
 def parse_job_line(line: list[int]) -> list[ProcessingData]:
     """
-    Parses a standard formatted FJSP job data line:
-    - The first number is the number of operations (n >= 1) of that job.
-    - Repeat for n times:
-        - First a number k >= 1 that represents the number of machines that can
-          process the operation.
-        - Then there are k pairs of numbers (machine, processing time) that
-          specify which are the machines and the processing times.
+    Parses a FJSPLIB job data line of the following form:
+
+        <num operations> * (<num machines> * (<machine> <processing time>))
+
+    In words, the first value is the number of operations. Then, for each
+    operation, the first number represents the number of machines that can
+    process the operation, followed by, the machine index and processing time
+    for each eligible machine.
 
     Note that the machine indices start from 1, so we subtract 1 to make them
     zero-based.
@@ -49,27 +50,23 @@ def parse_job_line(line: list[int]) -> list[ProcessingData]:
     operations = []
     idx = 1
 
-    while idx < len(line):
-        num_eligible_machines = int(line[idx])
-        idx += 1
-        operation = []
+    for _ in range(num_operations):
+        num_eligible = int(line[idx])
+        start = idx + 1
+        end = start + num_eligible * 2
 
-        for _ in range(num_eligible_machines):
-            machine = int(line[idx]) - 1  # make zero-based
-            duration = int(line[idx + 1])
-            operation.append((machine, duration))
-            idx += 2
+        machines = line[start:end:2]
+        durations = line[start + 1 : end + 1 : 2]
+        operations.append([(m - 1, d) for m, d in zip(machines, durations)])
 
-        operations.append(operation)
-
-    assert len(operations) == num_operations
+        idx += 1 + num_eligible * 2
 
     return operations
 
 
 def read(loc: Path) -> Instance:
     """
-    Parses an FJSPLIB formatted instance.
+    Reads an FJSPLIB formatted instance.
 
     Parameters
     ----------
@@ -114,10 +111,7 @@ def file2lines(loc: Path | str) -> list[list[int]]:
     with open(loc, "r") as fh:
         lines = [line for line in fh.readlines() if line.strip()]
 
-    def is_int(x):  # only relevant for avg. operations data
-        return "." not in x
+    def parse_num(word: str):
+        return int(word) if "." not in word else int(float(word))
 
-    return [
-        [int(x) if is_int(x) else int(float(x)) for x in line.split()]
-        for line in lines
-    ]
+    return [[parse_num(x) for x in line.split()] for line in lines]
