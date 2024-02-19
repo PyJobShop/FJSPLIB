@@ -78,7 +78,7 @@ def read(loc: Path) -> Instance:
     lines = file2lines(loc)
 
     # First line contains metadata.
-    num_jobs, num_machines, _ = lines[0]
+    num_jobs, num_machines = lines[0][0], lines[0][1]
 
     # The remaining lines contain the job-operation data, where each line
     # represents a job and its operations.
