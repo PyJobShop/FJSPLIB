@@ -8,7 +8,7 @@ Arc = tuple[int, int]
 @dataclass
 class Instance:
     """
-    The parsed data from the FJSPLIB instance.
+    The FJSPLIB instance data.
 
     Parameters
     ----------
@@ -81,7 +81,7 @@ def compute_precedences(jobs: list[list[ProcessingData]]) -> list[Arc]:
 
 def read(loc: Path) -> Instance:
     """
-    Reads an FJSPLIB formatted instance.
+    Reads an FJSPLIB instance.
 
     Parameters
     ----------
@@ -101,8 +101,10 @@ def read(loc: Path) -> Instance:
     # The remaining lines contain the job-operation data, where each line
     # represents a job and its operations.
     jobs = [parse_job_line(line) for line in lines[1:]]
-    precedences = compute_precedences(jobs)
+
+    # The remaining data can be computed from the job data.
     num_operations = len([op for operations in jobs for op in operations])
+    precedences = compute_precedences(jobs)
 
     return Instance(
         num_jobs,
