@@ -7,6 +7,9 @@ from tests.utils import read
 
 
 def test_write(tmp_path: Path):
+    """
+    Tests that ``write`` correctly writes an FJSPLIB instance to a file.
+    """
     instance = read("data/classic.fjs")
     write(tmp_path / "classic.fjs", instance)
 
@@ -16,4 +19,4 @@ def test_write(tmp_path: Path):
         "2 1 1 1 2 3 1 2 1",
     ]
     with open(tmp_path / "classic.fjs", "r") as fh:
-        assert_equal(fh.read().splitlines(), expected)
+        assert_equal(fh.read(), "\n".join(expected))

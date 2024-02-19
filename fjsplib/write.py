@@ -21,18 +21,18 @@ def write(where: Union[Path, str], instance: Instance):
     lines.append(f"{instance.num_jobs} {instance.num_machines} {flexibility}")
 
     for operations in instance.jobs:
-        line = [len(operations)]
+        job = [len(operations)]
 
         for processing_data in operations:
             num_eligible = len(processing_data)
-            line.append(num_eligible)
+            job.append(num_eligible)
 
             for machine, duration in processing_data:
                 # Machine indices are 1-indexed in FJSPLIB.
-                line.extend([machine + 1, duration])
+                job.extend([machine + 1, duration])
 
-        job_data = " ".join(str(num) for num in line)
-        lines.append(job_data)
+        line = " ".join(str(num) for num in job)
+        lines.append(line)
 
     formatted = "\n".join(lines)
 
