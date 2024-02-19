@@ -9,6 +9,7 @@ repository = "https://github.com/leonlan/FJSPLIB"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+numpy = "^1.26.4"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -32,7 +33,7 @@ select = [
 
 [tool.ruff.lint.isort]
 case-sensitive = true
-known-first-party = ["pyvrp", "tests"]
+known-first-party = ["fjsplib", "tests"]
 
 
 [tool.mypy]
