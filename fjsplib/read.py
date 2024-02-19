@@ -61,6 +61,24 @@ def parse_job_line(line: list[int]) -> list[ProcessingData]:
     return operations
 
 
+def compute_precedences(jobs: list[list[ProcessingData]]) -> list[Arc]:
+    """
+    Computes precedence relationships based on the job data.
+
+    In the classic FJSP, it is assumed that operations are processed in
+    sequence of their appearance in the job data.
+    """
+    precedences: list[Arc] = []
+    idx = 0
+
+    for operations in jobs:
+        arcs = range(idx, idx + len(operations) - 1)
+        precedences.extend((i, i + 1) for i in arcs)
+        idx += len(operations)
+
+    return precedences
+
+
 def read(loc: Path) -> Instance:
     """
     Reads an FJSPLIB formatted instance.
@@ -83,22 +101,13 @@ def read(loc: Path) -> Instance:
     # The remaining lines contain the job-operation data, where each line
     # represents a job and its operations.
     jobs = [parse_job_line(line) for line in lines[1:]]
-
-    # Precedence relationships between operations can be assumed from the FJSP
-    # problem definition, where operations are processed in sequence of their
-    # appearance in the job operation data.
-    precedences: list[Arc] = []
-    idx = 0
-
-    for operations in jobs:
-        job_indices = range(idx, idx + len(operations) - 1)
-        precedences.extend((i, i + 1) for i in job_indices)
-        idx += len(operations)
+    precedences = compute_precedences(jobs)
+    num_operations = len([op for operations in jobs for op in operations])
 
     return Instance(
         num_jobs,
         num_machines,
-        num_operations=idx,
+        num_operations=num_operations,
         jobs=jobs,
         precedences=precedences,
     )
