@@ -14,7 +14,7 @@ def test_write(tmp_path: Path):
     write(tmp_path / "classic.fjs", instance)
 
     expected = [
-        "2 3 1.0",
+        "2 3 1.7",
         "1 2 1 1 2 2",
         "2 1 1 1 2 3 1 2 1",
     ]

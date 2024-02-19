@@ -17,8 +17,12 @@ def write(where: Union[Path, str], instance: Instance):
     """
     lines = []
 
-    flexibility = round(instance.num_operations / instance.num_machines, 1)
-    lines.append(f"{instance.num_jobs} {instance.num_machines} {flexibility}")
+    # The flexibility is the average number of eligible machines per operation.
+    num_eligible = sum([len(task) for ops in instance.jobs for task in ops])
+    flexibility = round(num_eligible / instance.num_operations, 1)
+
+    metadata = f"{instance.num_jobs} {instance.num_machines} {flexibility}"
+    lines.append(metadata)
 
     for operations in instance.jobs:
         job = [len(operations)]
