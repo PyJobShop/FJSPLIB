@@ -51,15 +51,12 @@ def parse_job_line(line: list[int]) -> list[ProcessingData]:
     idx = 1
 
     for _ in range(num_operations):
-        num_eligible = int(line[idx])
-        start = idx + 1
-        end = start + num_eligible * 2
-
-        machines = line[start:end:2]
-        durations = line[start + 1 : end + 1 : 2]
+        num_pairs = int(line[idx]) * 2
+        machines = line[idx + 1 : idx + 1 + num_pairs : 2]
+        durations = line[idx + 2 : idx + 2 + num_pairs : 2]
         operations.append([(m - 1, d) for m, d in zip(machines, durations)])
 
-        idx += 1 + num_eligible * 2
+        idx += 1 + num_pairs
 
     return operations
 
