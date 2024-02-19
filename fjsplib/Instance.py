@@ -15,7 +15,9 @@ class Instance:
     num_operations
         The number of operations.
     jobs
-        A list of job data, each job consisting of a list of operation indices.
+        A list of job data, each job consisting of a list of operations.
+        Operations are list of tuples, where each tuple consists of a machine
+        index and a processing time.
     precedences
         A list of tuples consisting of two operation indices, representing the
         precedence relationship of two operations.
