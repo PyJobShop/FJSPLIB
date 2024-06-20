@@ -16,6 +16,11 @@ The FJSPLIB format is as follows:
 <num jobs> <num machines> <average operations per job>
 <num operations> * (<num machines> * (<machine idx> <duration>))
 ...
+
+<OPERATION_PRECEDENCE_SECTION>
+<node 1> <node 2>
+<node 3> <node 4>
+...
 ```
 
 The first line contains data about the number of jobs, number machines and average number of operations per job.
