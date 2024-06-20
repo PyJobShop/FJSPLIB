@@ -13,7 +13,7 @@ FJSPLIB is a Python package for reading and writing flexible job shop problem (F
 The FJSPLIB format is as follows:
 
 ``` sh
-<num jobs> <num machines> <average operations per job>
+<num jobs> <num machines> <avg num machines per operation>
 <num operations> * (<num machines> * (<machine idx> <duration>))
 ...
 
@@ -23,7 +23,7 @@ The FJSPLIB format is as follows:
 ...
 ```
 
-The first line contains data about the number of jobs, number machines and average number of operations per job.
+The first line contains data about the number of jobs, number machines and average number of machines that can process an operation.
 The following lines each represent the job data, one line for each job.
 These lines are each parsed as follows:
 - The first number denotes the number of operations for this job.
