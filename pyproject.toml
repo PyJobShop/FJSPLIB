@@ -1,6 +1,6 @@
 [project]
 name = "fjsplib"
-version = "0.0.1"
+version = "0.0.2a"
 description = "Python package to read and write FJSP instances."
 authors = [
     { name = "Leon Lan", email = "l.lan@vu.nl"},
