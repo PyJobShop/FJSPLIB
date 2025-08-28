@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Union
 
 from fjsplib.Instance import Instance
 
@@ -90,7 +89,7 @@ def read(loc: Path) -> Instance:
     )
 
 
-def file2lines(loc: Union[Path, str]) -> list[list[int]]:
+def file2lines(loc: Path | str) -> list[list[int]]:
     with open(loc, "r") as fh:
         lines = [line for line in fh.readlines() if line.strip()]
 

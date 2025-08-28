@@ -1,10 +1,9 @@
 from pathlib import Path
-from typing import Union
 
 from .Instance import Instance
 
 
-def write(where: Union[Path, str], instance: Instance):
+def write(where: Path | str, instance: Instance):
     """
     Writes a problem instance to file in FJSPLIB format.
 
