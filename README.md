@@ -8,7 +8,7 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/leonlan/FJSPLIB/.github%2Fworkflows%2FCI.yml?style=flat-square)](https://github.com/leonlan/FJSPLIB/)
 [![Codecov](https://img.shields.io/codecov/c/github/leonlan/FJSPLIB?style=flat-square)](https://app.codecov.io/gh/leonlan/FJSPLIB/)
 
-FJSPLIB is a Python package for reading and writing flexible job shop problem (FJSP) instances.
+FJSPLIB is a Python package for reading flexible job shop problem (FJSP) instances.
 
 The FJSPLIB format is as follows:
 
